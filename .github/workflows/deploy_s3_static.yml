@@ -1,4 +1,4 @@
-name: Upload demo.html file to S3
+name: Upload HTML files to S3
 
 on:
   workflow_dispatch:
@@ -18,6 +18,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ID }}
           aws-region: us-east-1
 
-      - name: Upload file to S3
+      - name: Upload HTML files to S3
         run: |
-          aws s3 cp demo.html s3://gha-demo1/demo.html
+          aws s3 sync . s3://gha-demo1 \
+            --exclude "*" \
+            --include "*.html"
